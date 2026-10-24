@@ -1,0 +1,1285 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Banco de Questões e Simulados</title>
+<style>
+:root{
+  --bg:#FDF6E3;--card:#FFFFFF;--field:#FFFDF6;--text:#161616;--muted:#5b5648;
+  --border:#161616;--bw:3px;--bw-lg:4px;
+  --pink:#FF4FA3;--blue:#2E6DF2;--mint:#3DDC8C;--orange:#FF8A1E;--yellow:#FFD23F;
+  --accent:var(--blue);--accent-t:#ffffff;
+  --soft:#FFF2B8;
+  --ok:#0B7A43;--okbg:#B9F3CE;
+  --bad:#B3122A;--badbg:#FFC2CE;
+  --low:#8A6200;--lowbg:#FFE59A;
+  --mid:#B35400;--midbg:#FFCB94;
+  --high:#B3122A;--highbg:#FFC2CE;
+  --shadow-off:4px;--shadow-off-sm:3px;
+  --shadow:var(--shadow-off) var(--shadow-off) 0 0 var(--border);
+  --shadow-sm:var(--shadow-off-sm) var(--shadow-off-sm) 0 0 var(--border);
+  --radius:0px;
+  box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#231E33;--card:#2D2743;--field:#271F3B;--text:#F5F0FF;--muted:#C2B8E0;
+  --border:#F5F0FF;--accent-t:#161616;--soft:#3A2F56;
+  --okbg:#174023;--badbg:#4A1420;--lowbg:#4A3A10;--midbg:#4A2A0C;--highbg:#4A1420;
+}}
+:root[data-theme="dark"]{
+  --bg:#231E33;--card:#2D2743;--field:#271F3B;--text:#F5F0FF;--muted:#C2B8E0;
+  --border:#F5F0FF;--accent-t:#161616;--soft:#3A2F56;
+  --okbg:#174023;--badbg:#4A1420;--lowbg:#4A3A10;--midbg:#4A2A0C;--highbg:#4A1420;
+}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+@media (prefers-reduced-motion:reduce){*{animation-duration:.001ms!important;transition-duration:.001ms!important}}
+body{
+  margin:0;background:var(--bg);color:var(--text);
+  font:16px/1.5 'Space Grotesk',system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+  background-image:
+    radial-gradient(circle,color-mix(in srgb,var(--text) 14%,transparent) 1.3px,transparent 1.3px);
+  background-size:22px 22px;
+  background-position:-4px -4px;
+}
+.wrap{max-width:860px;margin:0 auto;padding:22px 16px 64px;position:relative}
+h1,h2,.stat b,.score .ring>div{font-family:'Archivo Black','Space Grotesk',system-ui,sans-serif;text-transform:uppercase;letter-spacing:.01em}
+header{display:flex;align-items:flex-end;justify-content:space-between;gap:14px;flex-wrap:wrap;padding:4px 0 22px}
+h1{font-size:34px;font-weight:900;margin:0;line-height:1;transform:rotate(-1.2deg);display:inline-block}
+.sub{color:var(--muted);font-size:14px;margin-top:8px;font-weight:600}
+h2{font-size:19px;font-weight:900;margin:0 0 16px;display:inline-block;background:var(--yellow);color:#161616;padding:4px 10px;border:var(--bw) solid var(--border);box-shadow:var(--shadow-sm);transform:rotate(-.6deg)}
+.badge{font-size:12px;font-weight:800;color:var(--text);border:var(--bw) solid var(--border);border-radius:var(--radius);padding:4px 12px;background:var(--mint);box-shadow:var(--shadow-sm);text-transform:uppercase}
+.tabs{display:flex;gap:10px;margin-bottom:26px;flex-wrap:wrap}
+.tab{flex:1 1 auto;background:var(--card);border:var(--bw) solid var(--border);border-radius:var(--radius);margin:0;padding:11px 10px;color:var(--text);font:inherit;font-weight:800;font-size:14px;cursor:pointer;box-shadow:var(--shadow-sm);transition:transform .08s,box-shadow .08s;text-transform:uppercase}
+.tab:hover{transform:translate(-1px,-1px);box-shadow:5px 5px 0 0 var(--border)}
+.tab:active{transform:translate(2px,2px);box-shadow:0 0 0 0 var(--border)}
+.tab.on{background:var(--pink);color:#161616}
+.tab .n{font-weight:700;opacity:.8}
+.card{background:var(--card);border:var(--bw-lg) solid var(--border);border-radius:var(--radius);padding:20px;margin-bottom:20px;box-shadow:6px 6px 0 0 var(--border)}
+label.f{display:block;font-size:12px;font-weight:800;color:var(--text);margin:14px 0 6px;text-transform:uppercase;letter-spacing:.02em}
+input[type=text],input[type=number],textarea,select{width:100%;padding:11px 13px;border:var(--bw) solid var(--border);border-radius:var(--radius);background:var(--field);color:var(--text);font:inherit;font-weight:600;transition:box-shadow .1s,transform .1s;box-shadow:3px 3px 0 0 var(--border)}
+textarea{min-height:96px;resize:vertical}
+input:focus,textarea:focus,select:focus{outline:none;box-shadow:3px 3px 0 0 var(--accent);border-color:var(--accent)}
+input[type=radio]{accent-color:var(--accent);width:18px;height:18px}
+.alt{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.alt .radio{display:flex;align-items:center;gap:6px;cursor:pointer;flex:none}
+.letter{font-weight:900;width:22px;text-align:center;color:var(--text)}
+.hint{font-size:13px;color:var(--muted);margin:8px 0 14px;font-weight:600}
+button{font:inherit;cursor:pointer}
+.btn{border:var(--bw) solid var(--border);background:var(--yellow);color:#161616;padding:11px 22px;border-radius:var(--radius);font-weight:900;text-transform:uppercase;letter-spacing:.02em;box-shadow:var(--shadow);transition:transform .08s,box-shadow .08s}
+.btn:hover:not(:disabled){transform:translate(-1px,-1px);box-shadow:5px 5px 0 0 var(--border)}
+.btn:active:not(:disabled){transform:translate(4px,4px);box-shadow:0 0 0 0 var(--border)}
+.btn:disabled{opacity:.4;cursor:not-allowed;box-shadow:none;transform:none}
+.btn.ghost{background:var(--card);color:var(--text)}
+.btn.danger{background:var(--pink);color:#161616}
+.btn.sm{padding:7px 14px;font-size:12px}
+.icon{border:var(--bw) solid var(--border);background:var(--card);color:var(--text);width:34px;height:34px;border-radius:var(--radius);flex:none;box-shadow:var(--shadow-sm);font-weight:900;transition:transform .08s}
+.icon:hover:not(:disabled){transform:translate(-1px,-1px)}
+.icon:active:not(:disabled){transform:translate(3px,3px);box-shadow:none}
+.icon:disabled{opacity:.4}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.msg{font-size:14px;min-height:20px;margin-top:10px;font-weight:800}
+.msg.err{color:var(--bad)}.msg.ok{color:var(--ok)}
+.q{border:var(--bw) solid var(--border);border-radius:var(--radius);padding:16px;margin-bottom:14px;background:var(--card);box-shadow:var(--shadow-sm)}
+.q .top{display:flex;justify-content:space-between;gap:10px;align-items:flex-start;margin-bottom:8px}
+.chips{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}
+.chip{font-size:11px;background:var(--soft);color:#161616;border:2px solid var(--border);border-radius:var(--radius);padding:3px 9px;font-weight:800;white-space:nowrap;text-transform:uppercase}
+.lv{font-size:11px;border:2px solid var(--border);border-radius:var(--radius);padding:3px 9px;font-weight:800;white-space:nowrap;text-transform:uppercase}
+.lv.low{background:var(--lowbg);color:var(--low)}.lv.mid{background:var(--midbg);color:var(--mid)}.lv.high{background:var(--highbg);color:var(--high)}
+.txt{white-space:pre-wrap;overflow-wrap:anywhere;font-weight:600}
+.opt{display:flex;gap:10px;padding:9px 12px;border:var(--bw) solid var(--border);border-radius:var(--radius);margin-top:7px;overflow-wrap:anywhere;background:var(--field);font-weight:700}
+.opt b{flex:none;width:20px;color:var(--text)}
+label.opt{cursor:pointer;transition:transform .08s,box-shadow .08s}
+label.opt:hover{transform:translate(-1px,-1px);box-shadow:3px 3px 0 0 var(--border)}
+label.opt:has(input:checked){background:var(--yellow);box-shadow:3px 3px 0 0 var(--border)}
+label.opt input{margin-top:5px;flex:none}
+.opt.right{background:var(--okbg);border-color:var(--border)}
+.opt.wrong{background:var(--badbg);border-color:var(--border)}
+.acts{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
+.empty{text-align:center;color:var(--muted);padding:26px 8px;font-weight:700}
+.ring{width:128px;height:128px;border-radius:50%;margin:4px auto 14px;display:grid;place-items:center;background:conic-gradient(var(--mint) calc(var(--p)*1%),var(--soft) 0);border:var(--bw-lg) solid var(--border);box-shadow:var(--shadow)}
+.ring>div{width:92px;height:92px;border-radius:50%;background:var(--card);display:grid;place-items:center;font-size:24px;border:3px solid var(--border)}
+.score{text-align:center}
+.tag{font-size:12px;font-weight:900;margin-top:10px;text-transform:uppercase;display:inline-block;padding:3px 10px;border:2px solid var(--border)}
+.tag.ok{color:#161616;background:var(--okbg)}.tag.bad{color:#161616;background:var(--badbg)}.tag.na{color:var(--text);background:var(--soft)}
+.examBar{position:sticky;top:8px;z-index:5;background:var(--yellow);border:var(--bw-lg) solid var(--border);border-radius:var(--radius);padding:10px 14px;margin-bottom:16px;display:flex;justify-content:space-between;align-items:center;gap:8px;box-shadow:var(--shadow);color:#161616}
+.examBar strong{font-weight:900;text-transform:uppercase}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:20px}
+.stat{background:var(--card);border:var(--bw) solid var(--border);border-radius:var(--radius);padding:14px;text-align:center;box-shadow:var(--shadow-sm)}
+.stat:nth-child(1){background:var(--pink)}.stat:nth-child(2){background:var(--blue);color:#fff}.stat:nth-child(3){background:var(--mint)}
+.stat b{display:block;font-size:30px;font-weight:900;line-height:1.1}
+.stat span{font-size:11px;font-weight:800;text-transform:uppercase}
+.legend{display:flex;gap:8px;flex-wrap:wrap;font-size:12px;color:var(--text);align-items:center;margin-bottom:16px;font-weight:700}
+.sbar{display:grid;grid-template-columns:minmax(80px,32%) 1fr auto;gap:10px;align-items:center;margin-bottom:10px;font-size:14px;font-weight:700}
+.sbar .nm{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.track{height:12px;background:var(--field);border:2px solid var(--border);border-radius:var(--radius);overflow:hidden}
+.fill{height:100%;background:var(--orange)}
+.sbar small{color:var(--muted);white-space:nowrap;font-weight:700}
+.gain{margin-top:10px;padding:10px 12px;border-radius:var(--radius);background:var(--badbg);font-size:14px;border:2px solid var(--border);font-weight:700}
+.gain b{color:var(--bad)}
+.cz{background:var(--okbg);color:#161616;border:2px solid var(--border);border-radius:var(--radius);padding:0 6px;font-weight:900}
+.cz sup{font-size:10px;opacity:.75;margin-right:3px}
+.cz.bad{background:var(--badbg)}
+.cz.override{outline:3px dashed var(--border);outline-offset:2px}
+.bl{display:inline-flex;align-items:center;gap:4px;margin:2px 3px}
+.bl small{font-size:11px;font-weight:900;color:var(--muted)}
+input.blank{width:9em;max-width:100%;padding:5px 9px;border-radius:var(--radius);font-weight:800}
+.override-row{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:6px 0 10px;padding:8px 10px;background:var(--soft);border:var(--bw) solid var(--border);border-radius:var(--radius);font-size:13px;font-weight:700}
+.override-row .lbl{color:var(--text);margin-right:2px;text-transform:uppercase;font-size:11px}
+.toggle3{display:inline-flex;border:var(--bw) solid var(--border);border-radius:var(--radius);overflow:hidden;box-shadow:2px 2px 0 0 var(--border)}
+.toggle3 button{border:0;background:var(--card);color:var(--text);padding:6px 12px;font-size:11px;font-weight:900;cursor:pointer;text-transform:uppercase}
+.toggle3 button+button{border-left:2px solid var(--border)}
+.toggle3 button.on.ok{background:var(--okbg)}
+.toggle3 button.on.bad{background:var(--badbg)}
+.toggle3 button.on.auto{background:var(--soft)}
+.settings-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.settings-grid .full{grid-column:1/-1}
+@media (max-width:480px){.settings-grid{grid-template-columns:1fr}}
+.range-row{display:flex;align-items:center;gap:10px}
+.range-row input[type=number]{width:5.5em;flex:none}
+.help{font-size:13px;color:var(--text);margin:10px 0;font-weight:600;background:var(--field);border:2px solid var(--border);padding:8px 10px}
+.help code{background:var(--soft);border:2px solid var(--border);border-radius:0;padding:1px 5px;font-size:12px;color:#161616;font-weight:800}
+.preview{border:var(--bw) dashed var(--border);border-radius:var(--radius);padding:12px 14px;margin-top:16px;background:var(--field)}
+.preview small{display:block;color:var(--text);font-size:11px;font-weight:900;margin-bottom:6px;text-transform:uppercase}
+mjx-container[display="true"]{overflow-x:auto;overflow-y:hidden;max-width:100%;margin:.6em 0!important}
+[hidden]{display:none!important}
+.imgs{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
+.imgs img{max-width:100%;max-height:260px;border-radius:var(--radius);border:var(--bw) solid var(--border);display:block;object-fit:contain;background:var(--field)}
+.imgpick{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px}
+.imgpick .th{position:relative;width:84px;height:84px;border-radius:var(--radius);overflow:hidden;border:var(--bw) solid var(--border);background:var(--field);box-shadow:3px 3px 0 0 var(--border)}
+.imgpick .th img{width:100%;height:100%;object-fit:cover;display:block}
+.imgpick .th .rm{position:absolute;top:2px;right:2px;width:22px;height:22px;border-radius:0;border:2px solid var(--border);background:var(--pink);color:#161616;font-size:13px;line-height:1;cursor:pointer;font-weight:900}
+.imgpick .th .up{position:absolute;bottom:0;left:0;right:0;background:var(--yellow);color:#161616;font-size:10px;text-align:center;padding:2px 0;font-weight:800;text-transform:uppercase}
+.imgadd{width:84px;height:84px;border-radius:var(--radius);border:var(--bw) dashed var(--border);background:transparent;color:var(--text);font-size:12px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;cursor:pointer;font-weight:800}
+.imgadd:hover{background:var(--soft)}
+.imgadd:disabled{opacity:.4;cursor:not-allowed}
+.serial{display:inline-flex;align-items:center;gap:4px;flex:none}
+.serial input{width:4.5em;text-align:center;padding:8px 6px;font-weight:900}
+.q .top{gap:10px}
+.qnum{font-weight:900;color:#161616;background:var(--yellow);border:2px solid var(--border);padding:1px 7px;flex:none;margin-right:2px;font-size:12px}
+.taggrid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media (max-width:480px){.taggrid{grid-template-columns:1fr}}
+.tagchip{background:var(--blue);color:#fff}
+.subchip{background:var(--card);color:var(--text);border:2px solid var(--border)}
+.dm{font-size:11px;border:2px solid var(--border);border-radius:var(--radius);padding:3px 9px;font-weight:800;white-space:nowrap;text-transform:uppercase}
+.dm.low{background:var(--badbg);color:var(--bad)}.dm.mid{background:var(--lowbg);color:var(--low)}.dm.high{background:var(--okbg);color:var(--ok)}.dm.na{background:var(--soft);color:var(--text)}
+.mcg{display:block;margin:6px 0}
+.picklist{max-height:360px;overflow-y:auto;border:var(--bw) solid var(--border);border-radius:var(--radius);padding:6px;background:var(--field)}
+.pickrow{display:flex;gap:10px;align-items:flex-start;padding:8px 10px;border-radius:var(--radius);cursor:pointer;border:2px solid transparent}
+.pickrow:hover{background:var(--soft);border-color:var(--border)}
+.pickrow input{margin-top:3px;flex:none;accent-color:var(--accent);width:17px;height:17px}
+.pickrow .pn{font-weight:900;color:var(--text);flex:none;font-size:12px}
+.pickrow .pt{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:14px;font-weight:600}
+.pickrow .pc{display:flex;gap:4px;flex:none;margin-left:auto}
+.mcg .opt:first-child{margin-top:4px}
+.mcg .opt:last-child{margin-bottom:0}
+@media (max-width:520px){h1{font-size:26px}.card{padding:16px}.stats{gap:8px}.stat b{font-size:24px}}
+
+</style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+<script>
+window.MathJax={tex:{inlineMath:[['$','$'],['\\(','\\)']],displayMath:[['$$','$$'],['\\[','\\]']],processEscapes:true},
+svg:{fontCache:'global'},options:{skipHtmlTags:['script','noscript','style','textarea','pre','code','option']},
+startup:{pageReady:()=>MathJax.startup.defaultPageReady().then(()=>document.dispatchEvent(new Event('mjready')))}};
+</script>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div>
+      <h1>Banco de Questões</h1>
+      <div class="sub">Monte seu banco, faça simulados e descubra onde mais precisa estudar.</div>
+    </div>
+    <div class="row" style="gap:8px">
+      <span class="badge" id="store">carregando…</span>
+      <button type="button" class="icon" data-act="toggle-sound" id="sound-btn" aria-label="Desativar som">🔊</button>
+    </div>
+  </header>
+  <div class="tabs">
+    <button class="tab on" data-tab="bank">Banco <span class="n">(<span id="cnt">0</span>)</span></button>
+    <button class="tab" data-tab="sim">Simulado</button>
+    <button class="tab" data-tab="weak">Fraquezas <span class="n">(<span id="wcnt">0</span>)</span></button>
+    <button class="tab" data-tab="mastery">Domínio</button>
+    <button class="tab" data-tab="settings">Configurações</button>
+  </div>
+
+  <!-- BANCO -->
+  <section id="v-bank">
+    <div class="card">
+      <h2 id="form-title">Adicionar questão</h2>
+      <div class="row" style="justify-content:space-between;align-items:flex-end">
+        <div style="flex:1;min-width:160px"></div>
+        <div class="serial">
+          <div><label class="f" for="f-serial" style="margin-top:0">Nº de série</label>
+          <input type="number" id="f-serial" min="1" step="1" inputmode="numeric"></div>
+        </div>
+      </div>
+      <div class="hint" id="serial-hint" style="margin-top:4px"></div>
+      <label class="f" for="f-subject" style="margin-top:0">Matéria / assunto (opcional)</label>
+      <input type="text" id="f-subject" list="subjects" placeholder="Ex.: Direito Constitucional">
+      <datalist id="subjects"></datalist>
+      <div class="taggrid">
+        <div>
+          <label class="f" for="f-tag" style="margin-top:0">Tag (área ampla, opcional)</label>
+          <input type="text" id="f-tag" list="tags" placeholder="Ex.: Controle de Constitucionalidade">
+          <datalist id="tags"></datalist>
+        </div>
+        <div>
+          <label class="f" for="f-subtag" style="margin-top:0">Subtag (específico, opcional)</label>
+          <input type="text" id="f-subtag" list="subtags" placeholder="Ex.: ADI">
+          <datalist id="subtags"></datalist>
+        </div>
+      </div>
+      <div class="hint">Organização: Matéria → Tag (área média) → Subtag (específica).</div>
+      <label class="f" for="f-text">Enunciado</label>
+      <textarea id="f-text" placeholder="Digite o enunciado. Use as sintaxes abaixo para criar lacunas e/ou alternativas."></textarea>
+      <div class="help">
+        Fórmulas: <code>$x^2$</code> na linha ou <code>$$x^2$$</code> em destaque. Para um cifrão literal use <code>\$</code>.<br>
+        Lacuna: <code>{{c1::resposta}}</code>, <code>{{c2::outra::dica}}</code> (numere cada lacuna).<br>
+        Múltipla escolha: <code>{{m1:A::texto}} {{m1:B*::correta}} {{m1:C::texto}}</code> — o <code>*</code> depois da letra marca a correta. Pode haver vários grupos (<code>m1</code>, <code>m2</code>…) e combinar com lacunas na mesma questão.
+      </div>
+      <div class="row">
+        <button type="button" class="btn ghost sm" data-act="ins-cloze">+ lacuna</button>
+        <button type="button" class="btn ghost sm" data-act="ins-mc">+ grupo de alternativas</button>
+      </div>
+      <label class="f">Imagens do enunciado (opcional)</label>
+      <div class="imgpick" id="img-pick"></div>
+      <input type="file" id="img-file" accept="image/png,image/jpeg,image/webp,image/gif" multiple hidden>
+      <div class="msg" id="img-msg"></div>
+      <div class="preview" id="preview" hidden><small>Pré-visualização</small><div id="pv-body"></div></div>
+      <div class="row" style="margin-top:18px">
+        <button class="btn" data-act="save" id="save">Salvar questão</button>
+        <button class="btn ghost" data-act="cancel" id="cancel" hidden>Cancelar edição</button>
+      </div>
+      <div class="msg" id="msg"></div>
+    </div>
+    <div class="card">
+      <div class="row" style="justify-content:space-between;margin-bottom:12px;flex-wrap:wrap">
+        <h2 style="margin:0">Questões salvas</h2>
+        <div class="row" style="gap:6px">
+          <select id="filter" style="width:auto"></select>
+          <select id="filter-tag" style="width:auto"></select>
+        </div>
+      </div>
+      <div id="list"></div>
+    </div>
+  </section>
+
+  <!-- SIMULADO -->
+  <section id="v-sim" hidden>
+    <div class="card" id="sim-setup">
+      <h2>Montar simulado</h2>
+      <div id="setup-empty" class="empty" hidden>Você ainda não tem questões no banco.<br>Adicione algumas na aba “Banco”.</div>
+      <div id="setup-form">
+        <label class="f" for="s-subject" style="margin-top:0">Matéria</label>
+        <select id="s-subject"></select>
+        <label class="f" for="s-tag">Tag / subtag</label>
+        <select id="s-tag"></select>
+        <label class="f" for="s-mode">Tipo de sorteio</label>
+        <select id="s-mode"><option value="random">Aleatório</option><option value="weak">Focado nas minhas fraquezas</option><option value="manual">Escolher questões específicas</option></select>
+        <div id="s-n-box">
+          <label class="f" for="s-n">Quantidade de questões <span id="s-max" style="font-weight:400"></span></label>
+          <input type="number" id="s-n" min="1" value="10" inputmode="numeric">
+        </div>
+        <div class="hint" id="s-hint"></div>
+        <div id="s-manual-box" hidden>
+          <div class="row" style="justify-content:space-between;margin:10px 0 6px">
+            <span class="hint" style="margin:0" id="s-manual-count">0 selecionadas</span>
+            <div class="row" style="gap:6px">
+              <button type="button" class="btn ghost sm" data-act="manual-all">Marcar todas (filtradas)</button>
+              <button type="button" class="btn ghost sm" data-act="manual-none">Limpar seleção</button>
+            </div>
+          </div>
+          <input type="text" id="s-manual-search" placeholder="Buscar por texto, nº de série…" style="margin-bottom:8px">
+          <div id="s-manual-list"></div>
+        </div>
+        <button class="btn" data-act="start" id="start" style="margin-top:14px">Iniciar simulado</button>
+      </div>
+    </div>
+    <div id="sim-exam" hidden>
+      <div class="examBar"><strong id="prog">0/0 respondidas</strong>
+        <div class="row"><button class="btn ghost sm" data-act="quit">Cancelar</button><button class="btn sm" data-act="finish" id="finish">Finalizar</button></div>
+      </div>
+      <div id="exam-list"></div>
+      <div class="msg" id="exam-msg"></div>
+    </div>
+    <div id="sim-result" hidden></div>
+  </section>
+
+  <!-- FRAQUEZAS -->
+  <section id="v-weak" hidden>
+    <div id="weak-body"></div>
+  </section>
+
+  <!-- DOMÍNIO -->
+  <section id="v-mastery" hidden>
+    <div id="mastery-body"></div>
+  </section>
+
+  <!-- CONFIGURAÇÕES -->
+  <section id="v-settings" hidden>
+    <div class="card">
+      <h2>Pontuação de fraquezas</h2>
+      <div class="settings-grid">
+        <div class="full">
+          <label class="f" for="cfg-perr" style="margin-top:0">Pontos ganhos por erro</label>
+          <input type="number" id="cfg-perr" min="1" step="1" value="1">
+          <div class="hint">Toda vez que você errar uma questão num simulado, ela ganha essa quantidade de pontos.</div>
+        </div>
+        <div class="full">
+          <label class="f" style="margin-top:0">Faixas de dificuldade (em pontos)</label>
+        </div>
+        <div>
+          <label class="f" for="cfg-low" style="margin-top:0">Baixa até</label>
+          <div class="range-row"><input type="number" id="cfg-low" min="1" step="1" value="1"><span class="hint" style="margin:0">pontos</span></div>
+        </div>
+        <div>
+          <label class="f" for="cfg-mid" style="margin-top:0">Média até</label>
+          <div class="range-row"><input type="number" id="cfg-mid" min="1" step="1" value="3"><span class="hint" style="margin:0">pontos</span></div>
+        </div>
+        <div class="full hint" id="cfg-preview" style="margin-top:0"></div>
+      </div>
+      <div class="row" style="margin-top:8px">
+        <button class="btn" data-act="save-settings" id="save-settings">Salvar configurações</button>
+        <button class="btn ghost" data-act="reset-settings">Restaurar padrão</button>
+      </div>
+      <div class="msg" id="cfg-msg"></div>
+    </div>
+    <div class="card">
+      <h2>Domínio por tag/subtag</h2>
+      <div class="hint" style="margin-top:0">Calculado pela taxa de acerto (acertos ÷ respondidas) de cada tag e subtag nos simulados. Defina os limites, em %.</div>
+      <div class="settings-grid">
+        <div>
+          <label class="f" for="cfg-dlow" style="margin-top:0">Domínio baixo abaixo de</label>
+          <div class="range-row"><input type="number" id="cfg-dlow" min="1" max="98" step="1" value="50"><span class="hint" style="margin:0">%</span></div>
+        </div>
+        <div>
+          <label class="f" for="cfg-dhigh" style="margin-top:0">Domínio alto a partir de</label>
+          <div class="range-row"><input type="number" id="cfg-dhigh" min="2" max="99" step="1" value="80"><span class="hint" style="margin:0">%</span></div>
+        </div>
+        <div class="full hint" id="cfg-dpreview" style="margin-top:0"></div>
+        <div class="full hint" style="margin-top:0">Entre os dois limites é considerado domínio médio. Exige um mínimo de respostas para valer (definido abaixo).</div>
+        <div class="full">
+          <label class="f" for="cfg-dmin" style="margin-top:0">Mínimo de questões respondidas para calcular o domínio</label>
+          <input type="number" id="cfg-dmin" min="1" step="1" value="3">
+        </div>
+      </div>
+      <div class="row" style="margin-top:8px">
+        <button class="btn" data-act="save-settings" id="save-settings-2">Salvar configurações</button>
+      </div>
+    </div>
+  </section>
+</div>
+
+<script>
+(function(){
+const $=s=>document.querySelector(s);
+const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const L=i=>String.fromCharCode(65+i);
+
+/* ---------- som: feedback sintetizado arcade-casual ---------- */
+let audioCtx=null;
+let soundOn=true;
+try{const sv=localStorage.getItem('qbank_sound');if(sv==='0')soundOn=false}catch(e){}
+function getAudioCtx(){
+  if(!soundOn)return null;
+  if(!audioCtx){
+    try{audioCtx=new(window.AudioContext||window.webkitAudioContext)()}catch(e){return null}
+  }
+  if(audioCtx.state==='suspended')audioCtx.resume().catch(()=>{});
+  return audioCtx;
+}
+function noteFreq(semitonesFromA4){return 440*Math.pow(2,semitonesFromA4/12)}
+// um único tom curto com envelope AD(S)R simples
+function tone(ctx,t0,freq,dur,type,peak,glideTo){
+  const osc=ctx.createOscillator();
+  const gain=ctx.createGain();
+  osc.type=type||'sine';
+  osc.frequency.setValueAtTime(freq,t0);
+  if(glideTo)osc.frequency.exponentialRampToValueAtTime(Math.max(1,glideTo),t0+dur*0.9);
+  gain.gain.setValueAtTime(0,t0);
+  gain.gain.linearRampToValueAtTime(peak==null?0.18:peak,t0+Math.min(0.012,dur*0.25));
+  gain.gain.exponentialRampToValueAtTime(0.0001,t0+dur);
+  osc.connect(gain);gain.connect(ctx.destination);
+  osc.start(t0);osc.stop(t0+dur+0.02);
+}
+const SND={
+  // clique/tick leve: usado em botões pequenos, marcar checkbox
+  tick(){const ctx=getAudioCtx();if(!ctx)return;const t=ctx.currentTime;tone(ctx,t,noteFreq(-5),0.06,'square',0.09)},
+  // confirmar/salvar: whoosh curto ascendente (avanço/ganho)
+  confirm(){const ctx=getAudioCtx();if(!ctx)return;const t=ctx.currentTime;tone(ctx,t,noteFreq(0),0.1,'triangle',0.14,noteFreq(7))},
+  // cancelar/remover/desfazer: whoosh curto descendente (retorno/remoção)
+  cancel(){const ctx=getAudioCtx();if(!ctx)return;const t=ctx.currentTime;tone(ctx,t,noteFreq(5),0.11,'triangle',0.13,noteFreq(-7))},
+  // erro suave: dois tons curtos descendentes
+  error(){const ctx=getAudioCtx();if(!ctx)return;const t=ctx.currentTime;tone(ctx,t,noteFreq(-2),0.08,'square',0.11);tone(ctx,t+0.08,noteFreq(-7),0.12,'square',0.11)},
+  // acerto de uma questão: pop + pequeno brilho
+  hit(){const ctx=getAudioCtx();if(!ctx)return;const t=ctx.currentTime;
+    tone(ctx,t,noteFreq(12),0.05,'square',0.16);
+    tone(ctx,t+0.04,noteFreq(19),0.09,'sine',0.12);
+  },
+  // conquista média (ex: salvar questão, terminar ação importante): pop + arpejo ascendente maior
+  achieve(){const ctx=getAudioCtx();if(!ctx)return;const t=ctx.currentTime;
+    tone(ctx,t,noteFreq(3),0.05,'square',0.15);
+    const notes=[3,7,10,15];
+    notes.forEach((n,i)=>tone(ctx,t+0.05+i*0.055,noteFreq(n),0.14,'triangle',0.13));
+  },
+  // grande conquista (ex: finalizar simulado): fanfarra mais longa e festiva
+  fanfare(){const ctx=getAudioCtx();if(!ctx)return;const t=ctx.currentTime;
+    tone(ctx,t,noteFreq(0),0.07,'square',0.15);
+    const notes=[0,4,7,12,16,19,24];
+    notes.forEach((n,i)=>tone(ctx,t+0.07+i*0.065,noteFreq(n),0.2,'triangle',0.14));
+    tone(ctx,t+0.07+notes.length*0.065+0.02,noteFreq(24),0.35,'sine',0.1);
+  },
+  toggle(){soundOn=!soundOn;try{localStorage.setItem('qbank_sound',soundOn?'1':'0')}catch(e){}if(soundOn)SND.confirm();return soundOn}
+};
+const KEY='qbank_v1';
+const SKEY='qbank_settings_v1';
+const DEFAULT_SETTINGS={perError:1,lowMax:1,midMax:3,domLow:50,domHigh:80,domMin:3};
+
+let questions=[];
+let settings={...DEFAULT_SETTINGS};
+let settingsPersist={load:()=>({...DEFAULT_SETTINGS}),save:async s=>{try{localStorage.setItem(SKEY,JSON.stringify(s))}catch(e){}}};
+let persist={save:async q=>{},del:async id=>{}};
+let editingId=null, armedId=null, armedReset=null, exam=null, lastN=10, lastSubject='', lastMode='random', msgTimer=null, serialTouched=false;
+let manualSelected=new Set(), lastManualIds=[];
+let assetsApi=null;
+let formImages=[]; // {id,url} quando salvo via assets, ou {dataUrl} quando salvo local
+const MAX_IMGS=4;
+
+/* ---------- utilidades ---------- */
+function say(text,kind,sel){const el=$(sel||'#msg');el.textContent=text;el.className='msg '+(kind||'');clearTimeout(msgTimer);if(kind==='ok')msgTimer=setTimeout(()=>{el.textContent=''},2500)}
+function newId(){return 'q'+Date.now().toString(36)+Math.random().toString(36).slice(2,7)}
+function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+function valid(q){return !!q&&typeof q.text==='string'}
+function subjects(){return [...new Set(questions.map(q=>q.subject).filter(Boolean))].sort((a,b)=>a.localeCompare(b,'pt-BR'))}
+function tagsOf(){return [...new Set(questions.map(q=>q.tag).filter(Boolean))].sort((a,b)=>a.localeCompare(b,'pt-BR'))}
+function subtagsOf(tag){return [...new Set(questions.filter(q=>!tag||q.tag===tag).map(q=>q.subtag).filter(Boolean))].sort((a,b)=>a.localeCompare(b,'pt-BR'))}
+function setQuestions(arr){
+  const base=arr.filter(valid).map(q=>({...q,images:Array.isArray(q.images)?q.images:[],tag:q.tag||'',subtag:q.subtag||'',hits:qHits(q),answeredCount:qAnswered(q)}));
+  base.sort((a,b)=>(a.createdAt||0)-(b.createdAt||0));
+  const used=new Set(base.map(serialOf).filter(Boolean));
+  let next=1;
+  for(const q of base){
+    if(!serialOf(q)){while(used.has(next))next++;q.serial=next;used.add(next);persist.save(q).catch(()=>{});}
+  }
+  questions=base.sort((a,b)=>(b.createdAt||0)-(a.createdAt||0));
+  renderAll();
+}
+function serialOf(q){return Number.isInteger(q.serial)&&q.serial>0?q.serial:null}
+function nextSerial(){const used=questions.map(serialOf).filter(Boolean);return used.length?Math.max(...used)+1:1}
+function findBySerial(n,excludeId){return questions.find(q=>serialOf(q)===n&&q.id!==excludeId)}
+function pts(q){return Math.max(0,parseInt(q.errors,10)||0)}
+function level(p){
+  if(p<=0)return{k:'none',name:'sem erros'};
+  if(p<=settings.lowMax)return{k:'low',name:'baixa'};
+  if(p<=settings.midMax)return{k:'mid',name:'média'};
+  return{k:'high',name:'alta'};
+}
+function lvChip(p){if(p<=0)return'';const l=level(p);return `<span class="lv ${l.k}">Dificuldade ${l.name} · ${p} ${p===1?'ponto':'pontos'}</span>`}
+function qHits(q){return Math.max(0,parseInt(q.hits,10)||0)}
+function qAnswered(q){return Math.max(0,parseInt(q.answeredCount,10)||0)}
+function mastery(hits,answered){
+  if(answered<settings.domMin)return{k:'na',name:'ainda sem dados suficientes',pct:null};
+  const pct=Math.round(hits/answered*100);
+  if(pct<settings.domLow)return{k:'low',name:'domínio baixo',pct};
+  if(pct<settings.domHigh)return{k:'mid',name:'domínio médio',pct};
+  return{k:'high',name:'domínio alto',pct};
+}
+function dmChip(hits,answered){const m=mastery(hits,answered);return m.pct===null?`<span class="dm na">${answered} resp. · sem dados suficientes</span>`:`<span class="dm ${m.k}">${m.pct}% · ${m.name}</span>`}
+
+/* ---------- configurações ---------- */
+function sanitizeSettings(s){
+  let perError=Math.max(1,Math.round(Number(s&&s.perError)||DEFAULT_SETTINGS.perError));
+  let lowMax=Math.max(1,Math.round(Number(s&&s.lowMax)||DEFAULT_SETTINGS.lowMax));
+  let midMax=Math.max(lowMax+1,Math.round(Number(s&&s.midMax)||DEFAULT_SETTINGS.midMax));
+  let domLow=Math.min(97,Math.max(1,Math.round(Number(s&&s.domLow)||DEFAULT_SETTINGS.domLow)));
+  let domHigh=Math.min(99,Math.max(domLow+1,Math.round(Number(s&&s.domHigh)||DEFAULT_SETTINGS.domHigh)));
+  let domMin=Math.max(1,Math.round(Number(s&&s.domMin)||DEFAULT_SETTINGS.domMin));
+  return{perError,lowMax,midMax,domLow,domHigh,domMin};
+}
+function fillSettingsForm(){
+  $('#cfg-perr').value=settings.perError;
+  $('#cfg-low').value=settings.lowMax;
+  $('#cfg-mid').value=settings.midMax;
+  $('#cfg-dlow').value=settings.domLow;
+  $('#cfg-dhigh').value=settings.domHigh;
+  $('#cfg-dmin').value=settings.domMin;
+  updateSettingsPreview();
+}
+function updateSettingsPreview(){
+  const perr=Math.max(1,Math.round(Number($('#cfg-perr').value)||1));
+  let low=Math.max(1,Math.round(Number($('#cfg-low').value)||1));
+  let mid=Math.max(low+1,Math.round(Number($('#cfg-mid').value)||low+1));
+  $('#cfg-preview').textContent=`Com isso: cada erro soma ${perr} ${perr===1?'ponto':'pontos'}; 1 a ${low} ${low===1?'ponto':'pontos'} = dificuldade baixa; ${low+1} a ${mid} = média; ${mid+1}+ = alta.`;
+  let dlow=Math.min(97,Math.max(1,Math.round(Number($('#cfg-dlow').value)||50)));
+  let dhigh=Math.min(99,Math.max(dlow+1,Math.round(Number($('#cfg-dhigh').value)||80)));
+  $('#cfg-dpreview').textContent=`Com isso: abaixo de ${dlow}% de acerto = domínio baixo; ${dlow}% a ${dhigh-1}% = médio; ${dhigh}%+ = domínio alto.`;
+}
+async function saveSettings(){
+  const s=sanitizeSettings({perError:$('#cfg-perr').value,lowMax:$('#cfg-low').value,midMax:$('#cfg-mid').value,domLow:$('#cfg-dlow').value,domHigh:$('#cfg-dhigh').value,domMin:$('#cfg-dmin').value});
+  settings=s;fillSettingsForm();
+  try{await settingsPersist.save(s);say('Configurações salvas.','ok','#cfg-msg');renderAll()}
+  catch(e){say('Não foi possível salvar as configurações.','err','#cfg-msg')}
+}
+async function resetSettingsToDefault(){
+  settings={...DEFAULT_SETTINGS};fillSettingsForm();
+  try{await settingsPersist.save(settings)}catch(e){}
+  say('Configurações padrão restauradas.','ok','#cfg-msg');renderAll();
+}
+
+/* ---------- texto, lacunas, múltipla escolha e fórmulas ---------- */
+function sanitizeDollars(raw){
+  raw=String(raw==null?'':raw).replace(/R\$(?=\s*\d)/g,'R\u0000');
+  let out='',i=0;const n=raw.length;
+  while(i<n){
+    if(raw[i]==='\u0000'){out+='\\$';i++;continue}
+    if(raw[i]==='\\'&&raw[i+1]==='$'){out+='\\$';i+=2;continue}
+    if(raw[i]==='$'){
+      if(raw[i+1]==='$'){
+        const close=raw.indexOf('$$',i+2);
+        if(close!==-1){out+=raw.slice(i,close+2);i=close+2;continue}
+      }
+      const close=raw.indexOf('$',i+1);
+      if(close!==-1&&close>i+1){out+=raw.slice(i,close+1);i=close+1;continue}
+      out+='\\$';i+=1;continue;
+    }
+    out+=raw[i];i++;
+  }
+  return out;
+}
+const fmt=s=>esc(sanitizeDollars(s));
+const norm=s=>String(s==null?'':s).normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/(\d),(\d)/g,'$1.$2').replace(/\s+/g,' ').trim();
+let mjChain=Promise.resolve();
+function typeset(el){
+  const M=window.MathJax;
+  if(!M||!M.startup||!M.startup.promise||!M.typesetPromise)return;
+  mjChain=mjChain.then(()=>M.startup.promise).then(()=>{
+    try{if(el&&M.typesetClear)M.typesetClear([el]);}catch(e){}
+    return M.typesetPromise(el?[el]:undefined);
+  }).catch(err=>{
+    try{if(el&&M.typesetClear)M.typesetClear([el]);}catch(e){}
+  });
+}
+const HEAD_C=/^c(\d+)$/;
+const HEAD_M=/^m(\d+):([A-Za-z])(\*?)$/;
+// Varre um token a partir de '{{' (em start), respeitando aninhamento de {}, [], ()
+// no conteúdo interno — assim \sqrt{\sqrt{x}} não fecha o token cedo demais.
+// Só reconhece '}}' e '::' como delimitadores quando a profundidade está em 0.
+function scanBraceToken(text,start){
+  if(text[start]!=='{'||text[start+1]!=='{')return null;
+  let i=start+2;const n=text.length;let depth=0,buf='';const pieces=[];
+  while(i<n){
+    const c=text[i],c2=text[i+1];
+    if(depth===0&&c==='}'&&c2==='}'){pieces.push(buf);return{end:i+2,pieces}}
+    if(depth===0&&c===':'&&c2===':'){pieces.push(buf);buf='';i+=2;continue}
+    if(c==='{'||c==='['||c==='('){depth++;buf+=c;i++;continue}
+    if(c==='}'||c===']'||c===')'){if(depth>0)depth--;buf+=c;i++;continue}
+    buf+=c;i++;
+  }
+  return null;
+}
+function parseQuestion(text){
+  const parts=[], mcOrder=[], mcGroups={};
+  let i=0,last=0;const n=text.length;
+  while(i<n-1){
+    if(text[i]==='{'&&text[i+1]==='{'){
+      const scanned=scanBraceToken(text,i);
+      if(scanned&&scanned.pieces.length>=2){
+        const head=scanned.pieces[0];
+        const cMatch=HEAD_C.exec(head), mMatch=HEAD_M.exec(head);
+        if(cMatch){
+          parts.push({t:text.slice(last,i)});
+          parts.push({kind:'c',n:+cMatch[1],a:(scanned.pieces[1]||'').trim(),h:(scanned.pieces[2]||'').trim()});
+          last=scanned.end;i=scanned.end;continue;
+        }
+        if(mMatch){
+          const num=+mMatch[1],letter=mMatch[2].toUpperCase(),correct=mMatch[3]==='*';
+          parts.push({t:text.slice(last,i)});
+          if(!mcGroups[num]){mcGroups[num]={options:[]};mcOrder.push(num);parts.push({kind:'mcref',n:num});}
+          mcGroups[num].options.push({letter,text:(scanned.pieces[1]||'').trim(),correct});
+          last=scanned.end;i=scanned.end;continue;
+        }
+      }
+    }
+    i++;
+  }
+  parts.push({t:text.slice(last)});
+  return {parts,mcGroups,mcOrder};
+}
+const blanks=text=>parseQuestion(text).parts.filter(p=>p.kind==='c');
+const mcGroupsOf=text=>parseQuestion(text).mcGroups;
+const hasMc=text=>Object.keys(mcGroupsOf(text)).length>0;
+const hasCloze=text=>blanks(text).length>0;
+function checkQuestion(text){
+  const {parts,mcGroups}=parseQuestion(text);
+  const clozes=parts.filter(p=>p.kind==='c');
+  if(!clozes.length&&!Object.keys(mcGroups).length)return 'Adicione ao menos uma lacuna {{c1::resposta}} ou um grupo de alternativas {{m1:A::texto}}.';
+  const seenC={};
+  for(const c of clozes){
+    if(!c.a)return `A lacuna c${c.n} está sem resposta. Escreva {{c${c.n}::resposta}}.`;
+    if(seenC[c.n])return `O número c${c.n} aparece mais de uma vez. Use um número diferente para cada lacuna.`;
+    seenC[c.n]=1;
+  }
+  for(const [n,g] of Object.entries(mcGroups)){
+    if(g.options.length<2)return `O grupo m${n} precisa de pelo menos 2 alternativas.`;
+    if(g.options.some(o=>!o.text))return `Uma alternativa do grupo m${n} está sem texto.`;
+    const letters=g.options.map(o=>o.letter);
+    const dup=letters.find((l,i)=>letters.indexOf(l)!==i);
+    if(dup)return `O grupo m${n} tem a letra ${dup} repetida.`;
+    const cc=g.options.filter(o=>o.correct).length;
+    if(cc===0)return `O grupo m${n} não tem nenhuma alternativa marcada como correta. Use * depois da letra, ex.: {{m${n}:A*::...}}.`;
+    if(cc>1)return `O grupo m${n} tem mais de uma alternativa marcada como correta.`;
+  }
+  return '';
+}
+function shuffleMcText(text){
+  if(!hasMc(text))return text;
+  const {parts,mcGroups}=parseQuestion(text);
+  const shuffled={}; // n -> array de opções já embaralhadas (uma vez por grupo)
+  const counters={}; // n -> quantas opções deste grupo já foram emitidas (para letra sequencial)
+  return parts.map(p=>{
+    if(p.t!==undefined)return p.t;
+    if(p.kind==='c'){
+      const hint=p.h?`::${p.h}`:'';
+      return `{{c${p.n}::${p.a}${hint}}}`;
+    }
+    if(p.kind==='mcref'){
+      const n=p.n;
+      if(!shuffled[n]){shuffled[n]=shuffle(mcGroups[n].options);counters[n]=0}
+      return shuffled[n].map(opt=>{
+        const letter=L(counters[n]++);
+        return `{{m${n}:${letter}${opt.correct?'*':''}::${opt.text}}}`;
+      }).join(' ');
+    }
+    return '';
+  }).join('');
+}
+function clozeSpan(p,mode,qi,fill,override){
+  if(mode==='input')return `<span class="bl"><small>${p.n}</small><input class="blank" type="text" data-q="${qi}" data-b="${p.n}" placeholder="${esc(p.h)}" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Lacuna ${p.n}"></span>`;
+  const ans=`<span class="cz"><sup>${p.n}</sup>${esc(p.a)}</span>`;
+  if(mode==='answer')return ans;
+  const v=String((fill&&fill[p.n])||'').trim();
+  const auto=norm(v)===norm(p.a);
+  const ov=override&&override[p.n];
+  const isOk=ov==='ok'?true:ov==='bad'?false:auto;
+  if(mode!=='graded')return isOk?ans:`<span class="cz bad"><sup>${p.n}</sup>${v?`<s>${esc(v)}</s>`:'em branco'}</span> ${ans}`;
+  const cls='cz'+(isOk?'':' bad')+(ov?' override':'');
+  const box=isOk?`<span class="${cls}"><sup>${p.n}</sup>${esc(p.a)}</span>`:`<span class="${cls}"><sup>${p.n}</sup>${v?`<s>${esc(v)}</s>`:'em branco'}</span> ${ans}`;
+  const toggle=`<span class="toggle3" data-q="${qi}" data-b="${p.n}" role="group" aria-label="Corrigir lacuna ${p.n} manualmente">
+    <button type="button" data-ov="bad" class="${!ov&&!auto||ov==='bad'?'on bad':''}">Errada</button>
+    <button type="button" data-ov="" class="${!ov?'on auto':''}">Auto</button>
+    <button type="button" data-ov="ok" class="${ov==='ok'||(!ov&&auto)?'on ok':''}">Certa</button>
+  </span>`;
+  return `<span class="bl">${box}${toggle}</span>`;
+}
+function mcBlock(n,g,mode,qi,mcSel,mcOverride){
+  if(mode==='input'){
+    return `<div class="mcg">${g.options.map(o=>`<label class="opt"><input type="radio" name="mc${qi}_${n}" value="${esc(o.letter)}"><b>${esc(o.letter)}</b><span>${fmt(o.text)}</span></label>`).join('')}</div>`;
+  }
+  if(mode==='answer'){
+    return `<div class="mcg">${g.options.map(o=>`<div class="opt ${o.correct?'right':''}"><b>${esc(o.letter)}</b><span>${fmt(o.text)}</span></div>`).join('')}</div>`;
+  }
+  // graded
+  const chosen=mcSel&&mcSel[n];
+  const ov=mcOverride&&mcOverride[n];
+  return `<div class="mcg">${g.options.map(o=>{
+    let c='';if(o.correct)c='right';else if(o.letter===chosen)c='wrong';
+    const mark=o.correct?' · correta':(o.letter===chosen?' · sua resposta':'');
+    return `<div class="opt ${c}"><b>${esc(o.letter)}</b><span>${fmt(o.text)}<small style="color:var(--muted)">${mark}</small></span></div>`;
+  }).join('')}${chosen?`<div class="override-row"><span class="lbl">Essa resposta está:</span><span class="toggle3" data-mc="${qi}" data-g="${n}">
+    <button type="button" data-ov="bad" class="${(!ov&&chosen!==(g.options.find(o=>o.correct)||{}).letter)||ov==='bad'?'on bad':''}">Errada</button>
+    <button type="button" data-ov="" class="${!ov?'on auto':''}">Auto</button>
+    <button type="button" data-ov="ok" class="${ov==='ok'||(!ov&&chosen===(g.options.find(o=>o.correct)||{}).letter)?'on ok':''}">Certa</button>
+  </span></div>`:''}</div>`;
+}
+function textHtml(q,mode,qi,fill,override,mcSel,mcOverride){
+  mode=mode||'answer';
+  const {parts,mcGroups}=parseQuestion(q.text);
+  return parts.map((p,i)=>{
+    if(p.t!==undefined){
+      let t=p.t;
+      const before=parts[i-1],after=parts[i+1];
+      if(before&&before.kind==='mcref')t=t.replace(/^[ \t]*\n?[ \t]*/,'');
+      if(after&&after.kind==='mcref')t=t.replace(/[ \t]*\n?[ \t]*$/,'');
+      t=t.replace(/\n{3,}/g,'\n\n').replace(/[ \t]+\n/g,'\n');
+      return fmt(t);
+    }
+    if(p.kind==='c')return clozeSpan(p,mode,qi,fill,override);
+    if(p.kind==='mcref')return mcBlock(p.n,mcGroups[p.n],mode,qi,mcSel,mcOverride);
+    return '';
+  }).join('');
+}
+const imgSrc=im=>im.url||im.dataUrl||'';
+const imgsHtml=q=>(q.images&&q.images.length)?`<div class="imgs">${q.images.map(im=>`<img src="${esc(imgSrc(im))}" alt="Imagem do enunciado" loading="lazy">`).join('')}</div>`:'';
+
+/* ---------- armazenamento ---------- */
+function useLocal(label){
+  let mem=[];
+  try{mem=JSON.parse(localStorage.getItem(KEY)||'[]')}catch(e){mem=[]}
+  const flush=()=>{try{localStorage.setItem(KEY,JSON.stringify(mem))}catch(e){}};
+  persist={
+    save:async q=>{const i=mem.findIndex(x=>x.id===q.id);if(i>=0)mem[i]=q;else mem.push(q);flush();setQuestions(mem.slice())},
+    del:async id=>{mem=mem.filter(x=>x.id!==id);flush();setQuestions(mem.slice())}
+  };
+  $('#store').textContent=label||'salvo neste navegador';
+  setQuestions(mem.slice());
+}
+function loadLocalSettings(){
+  let s=DEFAULT_SETTINGS;
+  try{const raw=JSON.parse(localStorage.getItem(SKEY)||'null');if(raw)s=sanitizeSettings(raw)}catch(e){}
+  settings=s;
+  settingsPersist={save:async ns=>{settings=sanitizeSettings(ns);try{localStorage.setItem(SKEY,JSON.stringify(settings))}catch(e){}}};
+}
+async function init(){
+  loadLocalSettings();
+  fillSettingsForm();fillTagLists();$('#f-serial').value=1;renderAll();
+  $('#sound-btn').textContent=soundOn?'🔊':'🔇';
+  $('#sound-btn').setAttribute('aria-label',soundOn?'Desativar som':'Ativar som');
+  let db=null,uid=null;
+  try{
+    if(window.claude&&claude.use){
+      db=await claude.use('db');
+      const u=await claude.use('user');
+      uid=u?await u.id():null;
+    }
+  }catch(e){db=null}
+  if(db&&uid){
+    const coll=db.collection('data/users/'+uid);
+    persist={
+      save:async q=>{const {id,...rest}=q;await coll.doc(id).set(rest)},
+      del:async id=>{await coll.doc(id).delete()}
+    };
+    $('#store').textContent='salvo na sua conta';
+    coll.onSnapshot(
+      snap=>setQuestions(snap.docs.map(d=>({id:d.id,...d.data()}))),
+      ()=>useLocal('salvo neste navegador')
+    );
+    try{assetsApi=window.claude&&claude.use?await claude.use('assets'):null}catch(e){assetsApi=null}
+  }else{
+    useLocal('salvo neste navegador');
+  }
+  renderImgPicker();
+}
+
+function renderImgPicker(){
+  const box=$('#img-pick');
+  box.innerHTML=formImages.map((im,i)=>`<div class="th"><img src="${esc(imgSrc(im))}" alt="Imagem ${i+1}">${im._up?'<div class="up">Enviando…</div>':''}<button type="button" class="rm" data-act="rm-img" data-i="${i}" aria-label="Remover imagem ${i+1}">×</button></div>`).join('')
+    +(formImages.length<MAX_IMGS?`<button type="button" class="imgadd" id="img-add"><span>+</span><span>Imagem</span></button>`:'');
+  const add=$('#img-add');
+  if(add)add.addEventListener('click',()=>$('#img-file').click());
+}
+async function addImageFiles(files){
+  const room=MAX_IMGS-formImages.length;
+  const list=[...files].slice(0,Math.max(0,room));
+  if(!list.length)return;
+  for(const file of list){
+    if(!/^image\/(png|jpeg|jpg|webp|gif)$/.test(file.type)){say('Formato de imagem não suportado. Use PNG, JPEG, WEBP ou GIF.','err','#img-msg');continue}
+    if(file.size>8*1024*1024){say('Imagem muito grande (máx. 8 MB).','err','#img-msg');continue}
+    const slot={_up:true,dataUrl:await fileToDataUrl(file)};
+    formImages.push(slot);renderImgPicker();
+    if(assetsApi){
+      try{
+        const type=file.type==='image/jpg'?'image/jpeg':file.type;
+        const res=await assetsApi.upload(file,{type});
+        slot.id=res.id;slot.url=res.url;delete slot.dataUrl;delete slot._up;
+      }catch(e){
+        delete slot._up;
+        say('Não foi possível enviar uma imagem; ela ficou salva apenas neste navegador.','err','#img-msg');
+      }
+    }else{delete slot._up}
+    renderImgPicker();
+  }
+  schedulePreview();
+}
+function fileToDataUrl(file){return new Promise((res,rej)=>{const r=new FileReader();r.onload=()=>res(r.result);r.onerror=rej;r.readAsDataURL(file)})}
+function removeFormImage(i){formImages.splice(i,1);renderImgPicker();schedulePreview()}
+
+function fillTagLists(){
+  $('#tags').innerHTML=tagsOf().map(t=>`<option value="${esc(t)}">`).join('');
+  $('#subtags').innerHTML=subtagsOf($('#f-tag').value.trim()).map(t=>`<option value="${esc(t)}">`).join('');
+}
+function checkSerialHint(){
+  const n=parseInt($('#f-serial').value,10);
+  const clash=n?findBySerial(n,editingId||undefined):null;
+  $('#serial-hint').textContent=clash?`Já existe a questão nº ${n}: “${clash.text.slice(0,60)}${clash.text.length>60?'…':''}”. Ao salvar, os números serão trocados entre as duas.`:'';
+}
+let pvT=null;function schedulePreview(){clearTimeout(pvT);pvT=setTimeout(updatePreview,250)}
+function updatePreview(){
+  const box=$('#preview'),text=$('#f-text').value.trim();
+  if(!text&&!formImages.length){box.hidden=true;return}
+  const q={text,images:formImages};
+  $('#pv-body').innerHTML=`<div class="txt">${textHtml(q,'answer')}</div>${imgsHtml(q)}`;
+  box.hidden=false;typeset($('#pv-body'));
+}
+function insertCloze(){
+  const ta=$('#f-text'),v=ta.value,s=ta.selectionStart,e=ta.selectionEnd;
+  const next=Math.max(0,...blanks(v).map(b=>b.n),0)+1,sel=v.slice(s,e),open=`{{c${next}::`;
+  ta.value=v.slice(0,s)+open+sel+'}}'+v.slice(e);
+  const pos=sel?s+open.length+sel.length+2:s+open.length;
+  ta.focus();ta.setSelectionRange(pos,pos);schedulePreview();
+}
+function insertMc(){
+  const ta=$('#f-text'),v=ta.value,s=ta.selectionStart;
+  const groups=Object.keys(mcGroupsOf(v)).map(Number);
+  const next=groups.length?Math.max(...groups)+1:1;
+  const block=`\n{{m${next}:A*::}} {{m${next}:B::}} {{m${next}:C::}}\n`;
+  ta.value=v.slice(0,s)+block+v.slice(s);
+  const pos=s+block.indexOf('A*::')+4;
+  ta.focus();ta.setSelectionRange(pos,pos);schedulePreview();
+}
+function resetForm(){
+  editingId=null;formImages=[];serialTouched=false;
+  $('#f-text').value='';$('#f-subject').value='';$('#f-tag').value='';$('#f-subtag').value='';$('#img-msg').textContent='';
+  $('#f-serial').value=nextSerial();$('#serial-hint').textContent='';
+  $('#form-title').textContent='Adicionar questão';
+  $('#save').textContent='Salvar questão';$('#cancel').hidden=true;
+  renderImgPicker();fillTagLists();updatePreview();
+}
+function sayErr(text){SND.error();say(text,'err');}
+async function saveQuestion(){
+  const text=$('#f-text').value.trim(), subject=$('#f-subject').value.trim();
+  const tag=$('#f-tag').value.trim(), subtag=$('#f-subtag').value.trim();
+  let serial=parseInt($('#f-serial').value,10);
+  if(!text&&!formImages.length)return sayErr('Escreva o enunciado ou adicione uma imagem.');
+  const err=checkQuestion(text);if(err)return sayErr(err);
+  if(formImages.some(im=>im._up))return sayErr('Aguarde o envio das imagens terminar.');
+  if(!serial||serial<1)return sayErr('O número de série deve ser maior que zero.');
+  if(subtag&&!tag)return sayErr('Para usar uma subtag, defina também a tag.');
+  const old=editingId?questions.find(q=>q.id===editingId):null;
+  const images=formImages.map(im=>im.id?{id:im.id,url:im.url}:{dataUrl:im.dataUrl});
+  const q={id:editingId||newId(),text,subject,tag,subtag,serial,images,createdAt:old?old.createdAt:Date.now(),errors:old?pts(old):0,hits:old?qHits(old):0,answeredCount:old?qAnswered(old):0};
+  if(old&&old.lastWrong)q.lastWrong=old.lastWrong;
+  const clash=findBySerial(serial,q.id);
+  $('#save').disabled=true;
+  try{
+    if(clash){const swapped={...clash,serial:old?serialOf(old):nextSerial()};await persist.save(swapped)}
+    await persist.save(q);
+    const wasEdit=!!editingId;
+    resetForm();
+    SND.achieve();
+    say(wasEdit?(clash?`Questão atualizada. Nº ${serial} trocou de lugar com outra questão.`:'Questão atualizada.'):(clash?`Questão salva. Nº ${serial} trocou de lugar com outra questão.`:'Questão salva.'),'ok');
+  }catch(e){
+    sayErr(e&&e.code==='quota_exceeded'?'Limite de questões do banco atingido.':'Não foi possível salvar. Tente de novo.');
+  }finally{$('#save').disabled=false}
+}
+function editQuestion(id){
+  const q=questions.find(x=>x.id===id);if(!q)return;
+  editingId=id;serialTouched=true;
+  formImages=(q.images||[]).map(im=>({...im}));
+  $('#f-text').value=q.text;$('#f-subject').value=q.subject||'';
+  $('#f-tag').value=q.tag||'';$('#f-subtag').value=q.subtag||'';
+  $('#f-serial').value=serialOf(q)||nextSerial();$('#serial-hint').textContent='';
+  $('#form-title').textContent='Editar questão';
+  $('#save').textContent='Salvar alterações';$('#cancel').hidden=false;
+  renderImgPicker();fillTagLists();updatePreview();say('');
+  $('#form-title').scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+/* ---------- lista do banco ---------- */
+function chipsFor(q){return `<div class="chips">${lvChip(pts(q))}${q.tag?`<span class="chip tagchip">${esc(q.tag)}</span>`:''}${q.subtag?`<span class="chip subchip">${esc(q.subtag)}</span>`:''}${q.subject?`<span class="chip">${esc(q.subject)}</span>`:''}</div>`}
+function renderList(){
+  const f=$('#filter').value, tg=$('#filter-tag').value;
+  const items=questions.filter(q=>(!f||q.subject===f)&&matchTagVal(q,tg)).sort((a,b)=>(serialOf(a)||0)-(serialOf(b)||0));
+  if(!questions.length){$('#list').innerHTML='<div class="empty">Nenhuma questão ainda. Adicione a primeira acima.</div>';return}
+  if(!items.length){$('#list').innerHTML='<div class="empty">Nenhuma questão com esse filtro.</div>';return}
+  $('#list').innerHTML=items.map(q=>`<div class="q">
+    <div class="top"><div class="txt"><span class="qnum">Nº ${serialOf(q)}</span>${textHtml(q,'answer')}</div>${chipsFor(q)}</div>
+    ${imgsHtml(q)}
+    <div class="acts">
+      <button class="btn ghost sm" data-act="edit" data-id="${esc(q.id)}">Editar</button>
+      <button class="btn danger sm" data-act="del" data-id="${esc(q.id)}">${armedId===q.id?'Confirmar exclusão?':'Excluir'}</button>
+    </div></div>`).join('');
+  typeset($('#list'));
+}
+function tagSubtagOptions(){
+  const out=[];
+  tagsOf().forEach(t=>{
+    out.push({v:'tag:'+t,label:t,count:questions.filter(q=>q.tag===t).length});
+    subtagsOf(t).forEach(st=>out.push({v:'sub:'+t+'::'+st,label:'— '+st,count:questions.filter(q=>q.tag===t&&q.subtag===st).length}));
+  });
+  return out;
+}
+function matchTagVal(q,val){
+  if(!val)return true;
+  if(val.startsWith('tag:'))return q.tag===val.slice(4);
+  if(val.startsWith('sub:')){const[t,st]=val.slice(4).split('::');return q.tag===t&&q.subtag===st}
+  return true;
+}
+function fillSelects(){
+  const subs=subjects();
+  $('#subjects').innerHTML=subs.map(s=>`<option value="${esc(s)}">`).join('');
+  const f=$('#filter'),cur=f.value;
+  f.innerHTML='<option value="">Todas as matérias</option>'+subs.map(s=>`<option value="${esc(s)}">${esc(s)} (${questions.filter(q=>q.subject===s).length})</option>`).join('');
+  f.value=subs.includes(cur)?cur:'';
+  const s=$('#s-subject'),cs=s.value;
+  s.innerHTML=`<option value="">Todas as matérias (${questions.length})</option>`+subs.map(x=>`<option value="${esc(x)}">${esc(x)} (${questions.filter(q=>q.subject===x).length})</option>`).join('');
+  s.value=subs.includes(cs)?cs:'';
+  const opts=tagSubtagOptions();
+  const ft=$('#filter-tag'),curt=ft.value;
+  ft.innerHTML='<option value="">Todas as tags</option>'+opts.map(o=>`<option value="${esc(o.v)}">${esc(o.label)} (${o.count})</option>`).join('');
+  ft.value=opts.some(o=>o.v===curt)?curt:'';
+  const st=$('#s-tag'),curst=st.value;
+  st.innerHTML='<option value="">Todas as tags</option>'+opts.map(o=>`<option value="${esc(o.v)}">${esc(o.label)} (${o.count})</option>`).join('');
+  st.value=opts.some(o=>o.v===curst)?curst:'';
+}
+function poolOf(){const s=$('#s-subject').value,tg=$('#s-tag').value;return questions.filter(q=>(!s||q.subject===s)&&matchTagVal(q,tg))}
+function renderSetup(){
+  const total=questions.length,pool=poolOf(),weak=pool.filter(q=>pts(q)>0).length;
+  $('#setup-empty').hidden=total>0;$('#setup-form').hidden=total===0;
+  const mode=$('#s-mode');
+  mode.options[1].disabled=weak===0;
+  if(weak===0&&mode.value==='weak')mode.value='random';
+  const isManual=mode.value==='manual';
+  $('#s-n-box').hidden=isManual;
+  $('#s-manual-box').hidden=!isManual;
+  if(!isManual){
+    const n=$('#s-n');n.max=pool.length||1;
+    $('#s-max').textContent=`(disponíveis: ${pool.length})`;
+    let v=parseInt(n.value,10);if(!v||v<1)v=1;if(v>pool.length)v=Math.max(pool.length,1);n.value=v;
+  }
+  $('#s-hint').textContent=isManual
+    ?'Marque abaixo exatamente quais questões entram no simulado. Elas aparecem na prova na ordem em que você marcou.'
+    :mode.value==='weak'
+    ?`Prioriza as questões com mais pontos de fraqueza (${weak} disponíveis) e completa o restante aleatoriamente.`
+    :(weak===0?'As questões são sorteadas aleatoriamente. O modo “focado nas fraquezas” libera depois que você errar alguma questão.':'As questões são sorteadas aleatoriamente do banco.');
+  if(isManual){
+    for(const id of [...manualSelected])if(!pool.some(q=>q.id===id))manualSelected.delete(id);
+    renderManualList();
+  }
+  $('#start').disabled=isManual?manualSelected.size===0:pool.length===0;
+}
+function renderManualList(){
+  const pool=poolOf();
+  const q=$('#s-manual-search').value.trim().toLowerCase();
+  const items=pool.filter(x=>{
+    if(!q)return true;
+    return x.text.toLowerCase().includes(q)||String(serialOf(x))===q;
+  }).sort((a,b)=>(serialOf(a)||0)-(serialOf(b)||0));
+  $('#s-manual-count').textContent=`${manualSelected.size} selecionada${manualSelected.size===1?'':'s'}`;
+  $('#s-manual-list').innerHTML=`<div class="picklist">${items.length?items.map(x=>{
+    const preview=x.text.replace(/\{\{[\s\S]*?\}\}/g,'…').replace(/\s+/g,' ').trim().slice(0,90);
+    return `<label class="pickrow"><input type="checkbox" data-pick="${esc(x.id)}" ${manualSelected.has(x.id)?'checked':''}>
+      <span class="pn">Nº ${serialOf(x)}</span><span class="pt">${esc(preview)||'(sem texto)'}</span>
+      <span class="pc">${x.subject?`<span class="chip">${esc(x.subject)}</span>`:''}</span></label>`;
+  }).join(''):'<div class="empty" style="padding:16px">Nenhuma questão encontrada.</div>'}</div>`;
+}
+
+/* ---------- fraquezas ---------- */
+function renderWeak(){
+  const weak=questions.filter(q=>pts(q)>0).sort((a,b)=>pts(b)-pts(a)||(b.lastWrong||0)-(a.lastWrong||0));
+  $('#wcnt').textContent=weak.length;
+  const box=$('#weak-body');
+  if(!weak.length){
+    box.innerHTML=`<div class="card empty"><h2>Nenhuma fraqueza registrada</h2>${questions.length
+      ?'Cada questão que você errar num simulado ganha 1 ponto.<br>Faça um simulado para começar a mapear onde precisa melhorar.'
+      :'Adicione questões ao banco e faça um simulado para começar.'}</div>`;
+    return;
+  }
+  const total=weak.reduce((t,q)=>t+pts(q),0), high=weak.filter(q=>pts(q)>=4).length;
+  const by={};
+  weak.forEach(q=>{const k=q.subject||'Sem matéria';(by[k]=by[k]||{p:0,n:0});by[k].p+=pts(q);by[k].n++});
+  const rows=Object.entries(by).sort((a,b)=>b[1].p-a[1].p);
+  const max=rows[0][1].p;
+  box.innerHTML=`
+  <div class="stats">
+    <div class="stat"><b>${weak.length}</b><span>questões com erro</span></div>
+    <div class="stat"><b>${total}</b><span>pontos de fraqueza</span></div>
+    <div class="stat"><b>${high}</b><span>dificuldade alta</span></div>
+  </div>
+  <div class="card">
+    <h2>Por matéria</h2>
+    ${rows.map(([k,v])=>`<div class="sbar"><span class="nm" title="${esc(k)}">${esc(k)}</span><div class="track"><div class="fill" style="width:${Math.round(v.p/max*100)}%"></div></div><small>${v.p} ${v.p===1?'ponto':'pontos'} · ${v.n} ${v.n===1?'questão':'questões'}</small></div>`).join('')}
+  </div>
+  <div class="card">
+    <div class="row" style="justify-content:space-between;margin-bottom:6px">
+      <h2 style="margin:0">Questões que você errou</h2>
+      <button class="btn danger sm" data-act="reset-all">${armedReset==='all'?'Confirmar: zerar tudo?':'Zerar todos os pontos'}</button>
+    </div>
+    <div class="legend">Nível de dificuldade:
+      <span class="lv low">até ${settings.lowMax} · baixa</span><span class="lv mid">${settings.lowMax+1} a ${settings.midMax} · média</span><span class="lv high">${settings.midMax+1}+ · alta</span></div>
+    ${weak.map(q=>`<div class="q">
+      <div class="top"><div class="txt"><span class="qnum">Nº ${serialOf(q)}</span>${textHtml(q,'answer')}</div>${chipsFor(q)}</div>
+      ${imgsHtml(q)}
+      <div class="acts"><button class="btn ghost sm" data-act="reset-q" data-id="${esc(q.id)}">${armedReset===q.id?'Confirmar: zerar?':'Zerar pontos'}</button></div>
+    </div>`).join('')}
+  </div>`;
+  typeset(box);
+}
+function renderMastery(){
+  const box=$('#mastery-body');
+  const withTag=questions.filter(q=>q.tag);
+  if(!withTag.length){
+    box.innerHTML=`<div class="card empty"><h2>Nenhuma tag cadastrada</h2>Adicione tags às suas questões no Banco para acompanhar seu domínio por área.<br>Depois, responda simulados para gerar dados suficientes.</div>`;
+    return;
+  }
+  const byTag={};
+  withTag.forEach(q=>{
+    const t=byTag[q.tag]=byTag[q.tag]||{hits:0,answered:0,n:0,subs:{}};
+    t.hits+=qHits(q);t.answered+=qAnswered(q);t.n++;
+    if(q.subtag){const s=t.subs[q.subtag]=t.subs[q.subtag]||{hits:0,answered:0,n:0};s.hits+=qHits(q);s.answered+=qAnswered(q);s.n++}
+  });
+  const rows=Object.entries(byTag).sort((a,b)=>a[0].localeCompare(b[0],'pt-BR'));
+  box.innerHTML=`
+  <div class="card">
+    <h2>Domínio por tag</h2>
+    <div class="legend">Faixas: <span class="dm low">abaixo de ${settings.domLow}% · baixo</span><span class="dm mid">${settings.domLow}–${settings.domHigh-1}% · médio</span><span class="dm high">${settings.domHigh}%+ · alto</span><span class="dm na">menos de ${settings.domMin} respostas · sem dados</span></div>
+    ${rows.map(([tag,v])=>{
+      const subs=Object.entries(v.subs).sort((a,b)=>a[0].localeCompare(b[0],'pt-BR'));
+      return `<div class="q">
+        <div class="top"><span class="txt"><b>${esc(tag)}</b> <small style="color:var(--muted);font-weight:400">(${v.n} ${v.n===1?'questão':'questões'})</small></span>${dmChip(v.hits,v.answered)}</div>
+        ${subs.length?subs.map(([st,sv])=>`<div class="sbar" style="grid-template-columns:minmax(80px,32%) auto"><span class="nm" title="${esc(st)}">— ${esc(st)}</span>${dmChip(sv.hits,sv.answered)}</div>`).join(''):'<div class="hint" style="margin:4px 0 0">Sem subtags cadastradas nesta tag.</div>'}
+      </div>`;
+    }).join('')}
+  </div>`;
+}
+async function resetPoints(list){
+  for(const q of list){const u={...q,errors:0};delete u.lastWrong;await persist.save(u)}
+}
+
+function renderAll(){
+  $('#cnt').textContent=questions.length;
+  for(const id of [...manualSelected])if(!questions.some(q=>q.id===id))manualSelected.delete(id);
+  fillSelects();fillTagLists();renderList();renderSetup();renderWeak();renderMastery();
+  if(!editingId&&!serialTouched)$('#f-serial').value=nextSerial();
+}
+
+/* ---------- simulado ---------- */
+function pick(pool,n,mode){
+  if(mode==='weak'){
+    const w=shuffle(pool.filter(q=>pts(q)>0)).sort((a,b)=>pts(b)-pts(a));
+    const r=shuffle(pool.filter(q=>pts(q)===0));
+    return shuffle(w.concat(r).slice(0,n));
+  }
+  return shuffle(pool).slice(0,n);
+}
+function itemParts(i){return parseQuestion(exam.items[i].text)}
+function answered(i){
+  const hasFill=Object.values(exam.fill[i]).some(v=>String(v).trim());
+  const hasMcSel=Object.values(exam.mcSel[i]).some(Boolean);
+  return hasFill||hasMcSel;
+}
+function blankOk(i,b){
+  const ov=exam.override[i]&&exam.override[i][b.n];
+  if(ov==='ok')return true;
+  if(ov==='bad')return false;
+  return norm(exam.fill[i][b.n])===norm(b.a);
+}
+function mcOk(i,n,group){
+  const ov=exam.mcOverride[i]&&exam.mcOverride[i][n];
+  if(ov==='ok')return true;
+  if(ov==='bad')return false;
+  const chosen=exam.mcSel[i][n];
+  const correct=(group.options.find(o=>o.correct)||{}).letter;
+  return !!chosen&&chosen===correct;
+}
+function correctAt(i){
+  const {parts,mcGroups}=itemParts(i);
+  const cl=parts.filter(p=>p.kind==='c');
+  const mcNs=Object.keys(mcGroups).map(Number);
+  if(!cl.length&&!mcNs.length)return false;
+  return cl.every(b=>blankOk(i,b))&&mcNs.every(n=>mcOk(i,n,mcGroups[n]));
+}
+function startExam(){
+  lastSubject=$('#s-subject').value;lastMode=$('#s-mode').value;
+  let chosen;
+  if(lastMode==='manual'){
+    if(!manualSelected.size)return;
+    lastManualIds=[...manualSelected];
+    chosen=lastManualIds.map(id=>questions.find(q=>q.id===id)).filter(Boolean);
+  }else{
+    const pool=poolOf();
+    if(!pool.length)return;
+    let n=parseInt($('#s-n').value,10)||1;n=Math.max(1,Math.min(n,pool.length));
+    lastN=n;
+    chosen=pick(pool,n,lastMode);
+  }
+  const items=chosen.map(q=>({...q,text:shuffleMcText(q.text)}));
+  exam={items,fill:items.map(()=>({})),override:items.map(()=>({})),mcSel:items.map(()=>({})),mcOverride:items.map(()=>({})),warned:false,done:false};
+  $('#sim-setup').hidden=true;$('#sim-result').hidden=true;$('#sim-exam').hidden=false;
+  $('#finish').disabled=false;$('#exam-msg').textContent='';
+  $('#exam-list').innerHTML=items.map((q,i)=>`<div class="q">
+    <div class="top"><div class="txt"><b>${i+1}.</b> ${textHtml(q,'input',i)}</div><div class="chips"><span class="chip">Nº ${serialOf(q)}</span>${q.subject?`<span class="chip">${esc(q.subject)}</span>`:''}</div></div>
+    ${imgsHtml(q)}</div>`).join('');
+  typeset($('#exam-list'));updateProg();window.scrollTo({top:0});
+}
+function updateProg(){
+  const done=exam.items.reduce((t,q,i)=>t+(answered(i)?1:0),0);
+  $('#prog').textContent=`${done}/${exam.items.length} respondidas`;
+}
+async function finishExam(){
+  if(!exam||exam.done)return;
+  const left=exam.items.reduce((t,q,i)=>t+(answered(i)?0:1),0);
+  if(left>0&&!exam.warned){exam.warned=true;SND.error();say(`Faltam ${left} questão(ões) sem resposta. Clique em Finalizar de novo para concluir mesmo assim.`,'err','#exam-msg');return}
+  exam.done=true;$('#finish').disabled=true;say('Corrigindo e registrando pontos…','','#exam-msg');
+  exam.after={};let failed=0;
+  for(let i=0;i<exam.items.length;i++){
+    if(!answered(i))continue;
+    const cur=questions.find(x=>x.id===exam.items[i].id);
+    if(!cur)continue;
+    const ok=correctAt(i);
+    const upd={...cur,answeredCount:qAnswered(cur)+1,hits:qHits(cur)+(ok?1:0)};
+    if(!ok){upd.errors=pts(cur)+settings.perError;upd.lastWrong=Date.now()}
+    try{await persist.save(upd);if(!ok)exam.after[i]=upd.errors}catch(e){failed++}
+  }
+  renderResult(failed);
+}
+function renderResult(failed){
+  if(!exam._celebrated){exam._celebrated=true;SND.fanfare();}
+  const total=exam.items.length;
+  const hits=exam.items.reduce((t,q,i)=>t+(answered(i)&&correctAt(i)?1:0),0);
+  const wrong=exam.items.reduce((t,q,i)=>t+(answered(i)&&!correctAt(i)?1:0),0);
+  const blank=exam.items.reduce((t,q,i)=>t+(answered(i)?0:1),0);
+  const pct=Math.round(hits/total*100);
+  $('#sim-exam').hidden=true;
+  const box=$('#sim-result');box.hidden=false;
+  box.innerHTML=`<div class="card score"><div class="ring" style="--p:${pct}"><div>${hits}/${total}</div></div>
+    <div>${pct}% de acerto</div>
+    <div class="hint" style="margin-bottom:0">${wrong?`${wrong} ${wrong===1?'ponto de fraqueza registrado':'pontos de fraqueza registrados'}`:'Nenhum erro desta vez, sem novos pontos.'}${blank?` · ${blank} em branco (não geram ponto)`:''}${failed?` · ${failed} não puderam ser registrados`:''}</div>
+    <div class="row" style="justify-content:center;margin-top:16px">
+      <button class="btn" data-act="again">Novo simulado</button>
+      ${wrong?'<button class="btn ghost" data-act="see-weak">Ver minhas fraquezas</button>':''}
+      <button class="btn ghost" data-act="back">Voltar</button></div></div>`+
+    exam.items.map((q,i)=>{
+      let tag;
+      if(!answered(i))tag='<div class="tag na">Não respondida</div>';
+      else if(correctAt(i))tag='<div class="tag ok">Acertou</div>';
+      else{
+        const p=exam.after[i];
+        tag=`<div class="tag bad">Errou</div>`+(p?`<div class="gain"><b>+1 ponto de fraqueza.</b> Agora esta questão tem ${p} ${p===1?'ponto':'pontos'} (dificuldade ${level(p).name}).</div>`:'');
+      }
+      return `<div class="q"><div class="top"><div class="txt"><b>${i+1}.</b> ${textHtml(q,'graded',i,exam.fill[i],exam.override[i],exam.mcSel[i],exam.mcOverride[i])}</div><div class="chips"><span class="chip">Nº ${serialOf(q)}</span>${q.subject?`<span class="chip">${esc(q.subject)}</span>`:''}</div></div>
+      ${imgsHtml(q)}${tag}</div>`}).join('');
+  typeset(box);window.scrollTo({top:0});
+}
+async function setOverride(i,b,val){
+  if(!exam||!exam.done)return;
+  const wasWrong=!correctAt(i);
+  exam.override[i]=exam.override[i]||{};
+  if(val)exam.override[i][b]=val;else delete exam.override[i][b];
+  await applyOverrideDelta(i,wasWrong);
+}
+async function setMcOverride(i,n,val){
+  if(!exam||!exam.done)return;
+  const wasWrong=!correctAt(i);
+  exam.mcOverride[i]=exam.mcOverride[i]||{};
+  if(val)exam.mcOverride[i][n]=val;else delete exam.mcOverride[i][n];
+  await applyOverrideDelta(i,wasWrong);
+}
+async function applyOverrideDelta(i,wasWrong){
+  const nowWrong=!correctAt(i);
+  if(wasWrong!==nowWrong){
+    const cur=questions.find(x=>x.id===exam.items[i].id);
+    if(cur){
+      const delta=nowWrong?settings.perError:-settings.perError;
+      const upd={...cur,errors:Math.max(0,pts(cur)+delta),hits:Math.max(0,qHits(cur)+(nowWrong?-1:1))};
+      if(nowWrong)upd.lastWrong=Date.now();
+      try{await persist.save(upd);exam.after[i]=nowWrong?upd.errors:undefined}catch(e){}
+    }
+  }
+  renderResult(0);
+}
+function backToSetup(){
+  exam=null;$('#sim-exam').hidden=true;$('#sim-result').hidden=true;$('#sim-setup').hidden=false;renderSetup();
+}
+function goTab(name){
+  document.querySelectorAll('.tab').forEach(b=>b.classList.toggle('on',b.dataset.tab===name));
+  $('#v-bank').hidden=name!=='bank';$('#v-sim').hidden=name!=='sim';$('#v-weak').hidden=name!=='weak';$('#v-mastery').hidden=name!=='mastery';$('#v-settings').hidden=name!=='settings';
+  if(name==='sim'&&!exam)renderSetup();
+  if(name==='weak')renderWeak();
+  if(name==='mastery')renderMastery();
+  if(name==='settings')fillSettingsForm();
+  window.scrollTo({top:0});
+}
+
+/* ---------- eventos ---------- */
+document.addEventListener('click',async e=>{
+  const ovBtn=e.target.closest('.toggle3 button');
+  if(ovBtn){
+    SND.tick();
+    const grp=ovBtn.closest('.toggle3');
+    if(grp.dataset.mc!==undefined)setMcOverride(+grp.dataset.mc,+grp.dataset.g,ovBtn.dataset.ov);
+    else setOverride(+grp.dataset.q,+grp.dataset.b,ovBtn.dataset.ov);
+    return;
+  }
+  const soundBtn=e.target.closest('[data-act="toggle-sound"]');
+  if(soundBtn){const on=SND.toggle();soundBtn.textContent=on?'🔊':'🔇';soundBtn.setAttribute('aria-label',on?'Desativar som':'Ativar som');return}
+  const t=e.target.closest('[data-tab],[data-act]');if(!t)return;
+  if(t.dataset.tab){SND.tick();goTab(t.dataset.tab);return}
+  const a=t.dataset.act;
+  if(a==='save-settings'){SND.achieve();return saveSettings();}
+  if(a==='reset-settings'){SND.cancel();return resetSettingsToDefault();}
+  if(a==='rm-img'){SND.cancel();removeFormImage(+t.dataset.i)}
+  else if(a==='save')saveQuestion();
+  else if(a==='cancel'){SND.cancel();resetForm();say('')}
+  else if(a==='edit'){SND.tick();editQuestion(t.dataset.id);}
+  else if(a==='del'){
+    const id=t.dataset.id;
+    if(armedId===id){armedId=null;SND.cancel();try{await persist.del(id);if(editingId===id)resetForm()}catch(err){say('Não foi possível excluir.','err')}renderList()}
+    else{SND.tick();armedId=id;renderList();setTimeout(()=>{if(armedId===id){armedId=null;renderList()}},3000)}
+  }
+  else if(a==='reset-q'||a==='reset-all'){
+    const key=a==='reset-all'?'all':t.dataset.id;
+    if(armedReset===key){
+      armedReset=null;SND.cancel();
+      try{await resetPoints(key==='all'?questions.filter(q=>pts(q)>0):questions.filter(q=>q.id===key))}catch(err){}
+      renderWeak();
+    }else{SND.tick();armedReset=key;renderWeak();setTimeout(()=>{if(armedReset===key){armedReset=null;renderWeak()}},3000)}
+  }
+  else if(a==='start'){SND.achieve();startExam();}
+  else if(a==='finish')finishExam();
+  else if(a==='quit'){SND.cancel();backToSetup();}
+  else if(a==='again'){
+    SND.tick();
+    $('#s-subject').value=lastSubject;$('#s-mode').value=lastMode;
+    if(lastMode==='manual')manualSelected=new Set(lastManualIds.filter(id=>questions.some(q=>q.id===id)));
+    else $('#s-n').value=lastN;
+    renderSetup();startExam();
+  }
+  else if(a==='back'){SND.tick();backToSetup();}
+  else if(a==='see-weak'){SND.tick();goTab('weak')}
+  else if(a==='ins-cloze'){SND.tick();insertCloze();}
+  else if(a==='ins-mc'){SND.tick();insertMc();}
+  else if(a==='manual-all'){
+    SND.tick();
+    const q=$('#s-manual-search').value.trim().toLowerCase();
+    poolOf().filter(x=>!q||x.text.toLowerCase().includes(q)||String(serialOf(x))===q).forEach(x=>manualSelected.add(x.id));
+    renderManualList();$('#start').disabled=manualSelected.size===0;
+  }
+  else if(a==='manual-none'){SND.cancel();manualSelected.clear();renderManualList();$('#start').disabled=true;}
+});
+document.addEventListener('change',e=>{
+  const t=e.target;
+  if(t.id==='filter'||t.id==='filter-tag')renderList();
+  else if(t.id==='s-subject'||t.id==='s-n'||t.id==='s-mode'||t.id==='s-tag')renderSetup();
+  else if(t.id==='img-file'){if(t.files&&t.files.length)addImageFiles(t.files);t.value=''}
+  else if(t.dataset&&t.dataset.pick!==undefined){
+    SND.tick();
+    if(t.checked)manualSelected.add(t.dataset.pick);else manualSelected.delete(t.dataset.pick);
+    $('#s-manual-count').textContent=`${manualSelected.size} selecionada${manualSelected.size===1?'':'s'}`;
+    $('#start').disabled=manualSelected.size===0;
+  }
+  else if(t.name&&/^mc\d+_\d+$/.test(t.name)&&exam&&!exam.done){
+    SND.tick();
+    const m=t.name.match(/^mc(\d+)_(\d+)$/);
+    exam.mcSel[+m[1]][+m[2]]=t.value;exam.warned=false;$('#exam-msg').textContent='';updateProg();
+  }
+});
+document.addEventListener('input',e=>{
+  const t=e.target;
+  if(t.classList.contains('blank')&&exam&&!exam.done){exam.fill[+t.dataset.q][t.dataset.b]=t.value;exam.warned=false;$('#exam-msg').textContent='';updateProg();return}
+  if(t.id==='f-text')schedulePreview();
+  if(t.id==='f-serial'){serialTouched=true;checkSerialHint();}
+  if(t.id==='f-tag'){$('#subtags').innerHTML=subtagsOf(t.value.trim()).map(x=>`<option value="${esc(x)}">`).join('')}
+  if(t.id==='cfg-perr'||t.id==='cfg-low'||t.id==='cfg-mid'||t.id==='cfg-dlow'||t.id==='cfg-dhigh'||t.id==='cfg-dmin')updateSettingsPreview();
+  if(t.id==='s-manual-search')renderManualList();
+});
+document.addEventListener('mjready',()=>typeset());
+init();
+})();
+</script>
+<script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-svg.js"></script>
+</body>
+</html>
